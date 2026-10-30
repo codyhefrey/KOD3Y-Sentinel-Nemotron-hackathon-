@@ -1,6 +1,93 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>KOD3Y Sentinel | Nemotron</title><style>body{background:#0b1425;color:#e8f5ff;font:16px system-ui;margin:0}main{max-width:850px;margin:auto;padding:28px}h1{color:#6de5ce}section{background:#19283e;border-radius:14px;padding:22px;margin:18px 0}textarea{box-sizing:border-box;width:100%;height:230px;background:#0c1829;color:white;border:1px solid #567;padding:14px;border-radius:8px}button{background:#25c5a5;color:#001b1a;border:0;border-radius:8px;padding:12px 20px;font-weight:bold}pre{white-space:pre-wrap;overflow-wrap:anywhere}label{display:block;margin:16px 0}small{color:#bdcde0}</style></head><body><main><h1>KOD3Y Sentinel</h1><p>Nemotron Security Copilot · Synthetic security investigations</p><section><h2>Security events</h2><small>Only use synthetic demo data. Never upload secrets or customer logs.</small><textarea id="events" aria-label="Synthetic security events">[
-{"timestamp":"2026-10-28T09:00:00Z","action":"login","result":"failure","user":"demo"},
-{"timestamp":"2026-10-28T09:02:00Z","action":"login","result":"failure","user":"demo"},
-{"timestamp":"2026-10-28T09:04:00Z","action":"login","result":"failure","user":"demo"},
-{"timestamp":"2026-10-28T09:06:00Z","action":"mfa_disabled","result":"success","user":"demo"}
-]</textarea><label><input type="checkbox" id="ai"> Request real Nebius explanation (requires server credentials; may use credits)</label><button id="run">Analyze events</button></section><section><h2>Findings</h2><pre id="output" role="status">Press Analyze events to begin.</pre></section><small>Defensive educational prototype. Findings and AI outputs require human verification; no automated enforcement.</small></main><script>document.getElementById('run').onclick=async()=>{let out=document.getElementById('output');out.textContent='Analyzing...';try{let events=JSON.parse(document.getElementById('events').value);let response=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({events,use_ai:document.getElementById('ai').checked})});out.textContent=JSON.stringify(await response.json(),null,2)}catch(e){out.textContent='Error: '+e.message}}</script></body></html>
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Evidence-first, synthetic security incident triage with optional NVIDIA Nemotron analysis on Nebius Token Factory.">
+<title>KOD3Y Sentinel · Nemotron Security Copilot</title>
+<style>
+:root{color-scheme:dark;font:16px/1.5 system-ui,Segoe UI,sans-serif;--bg:#080f1e;--panel:#121f32;--muted:#a7bbcb;--teal:#55f0ca;--line:#294058}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#15314a 0,var(--bg) 56%);color:#eef7ff}
+main{max-width:1100px;margin:auto;padding:32px 20px 65px}header{display:flex;justify-content:space-between;gap:16px;align-items:center}
+.brand{font-weight:900;color:var(--teal);letter-spacing:.16em;font-size:.85rem}.eyebrow{color:#a0dcdf;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase}
+h1{font-size:clamp(2rem,5vw,3.9rem);letter-spacing:-.05em;line-height:1.08;margin:36px 0 14px}
+h2{margin:0 0 12px;font-size:1.18rem}p{color:var(--muted);max-width:720px}a{color:#94e6ea}
+.pill{border:1px solid #477a80;border-radius:999px;padding:6px 11px;color:#c4fff5;font-size:.78rem}
+.layout{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-top:25px}
+.panel{background:linear-gradient(145deg,#14263d,#111c2d);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
+textarea,input{font:inherit;background:#071326;color:#ecfaff;border:1px solid #436078;border-radius:10px}
+textarea{width:100%;height:250px;padding:14px;resize:vertical;font:13px/1.5 ui-monospace,monospace}
+input[type=password]{padding:10px;width:100%}button{font:inherit;cursor:pointer;border:0;border-radius:10px;background:#4eebca;color:#092325;font-weight:800;padding:12px 16px}
+button.secondary{background:#20364b;color:#e4f7ff;border:1px solid #3a5468;font-size:.85rem;padding:8px 11px}
+.buttons{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 17px}label{display:block;font-weight:600;margin:10px 0}
+.small{font-size:.83rem;color:var(--muted)}.summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0}
+.metric{padding:13px;background:#091728;border-radius:12px;border:1px solid var(--line)}
+.metric strong{display:block;font-size:1.55rem}.metric span{color:var(--muted);font-size:.73rem}
+.finding{background:#0b1b2b;border-left:3px solid #f7aa72;margin:10px 0;padding:14px;border-radius:7px}
+.finding h3{margin:2px 0 7px;font-size:1rem}.finding p{margin:4px 0;font-size:.86rem}
+.severity{color:#fdbe94;font-size:.77rem;text-transform:uppercase;font-weight:800}
+code{color:#9be3ec}ul{padding-left:18px;margin:6px 0;font-size:.86rem;color:#cbd9e5}
+#modelText{white-space:pre-wrap;overflow-wrap:anywhere;color:#e5f5ff}
+#feedback{color:#e4c49b;font-size:.88rem;min-height:20px}.footer{margin-top:25px;font-size:.84rem}
+@media(max-width:770px){.layout{grid-template-columns:1fr}main{padding:20px 14px 45px}.summary{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style></head>
+<body><main>
+<header><span class="brand">KOD3Y T3CH / SENTINEL</span><span class="pill">DEFENSIVE DEMONSTRATION</span></header>
+<h1>Turn security signals<br>into defensible decisions.</h1>
+<p>Investigate synthetic authentication and security-change events. Trace every alert to source event IDs, see human-approved response steps, and optionally ask NVIDIA Nemotron through Nebius to explain the evidence.</p>
+<div class="layout">
+<section class="panel">
+<span class="eyebrow">01 · Investigation workspace</span><h2>Choose a synthetic incident</h2>
+<div class="buttons"><button class="secondary" id="scenario-burst">Account takeover</button><button class="secondary" id="scenario-drift">Security settings</button><button class="secondary" id="scenario-clean">Quiet baseline</button></div>
+<label for="events">Synthetic JSON events</label>
+<textarea id="events" spellcheck="false" aria-label="Synthetic security events"></textarea>
+<p class="small">Never paste real customer data, passwords, access tokens or sensitive logs. The public demo performs deterministic analysis without contacting Nebius.</p>
+<label><input type="checkbox" id="ai"> Request live NVIDIA Nemotron explanation (optional)</label>
+<label class="small" for="token">Demo access token for live AI (if configured by host)</label>
+<input id="token" type="password" autocomplete="off" placeholder="Leave empty for free offline analysis">
+<p class="small">Live AI requires host-enabled service, an issued Nebius key, the permitted model and a separate demo access token. Inference may consume Nebius credits.</p>
+<button id="run">Analyze incident</button><p id="feedback" role="status"></p>
+</section>
+<section class="panel">
+<span class="eyebrow">02 · Evidence-backed triage</span><h2>Investigation results</h2>
+<div class="summary"><div class="metric"><strong id="eventsNum">—</strong><span>EVENTS</span></div><div class="metric"><strong id="findingsNum">—</strong><span>FINDINGS</span></div><div class="metric"><strong id="highNum">—</strong><span>HIGH SEVERITY</span></div></div>
+<div id="findings"><p>Choose a scenario and click Analyze incident.</p></div>
+<h2 style="margin-top:26px">Nemotron copilot</h2><div id="modelText" class="small" role="status">Optional live analysis has not been requested.</div>
+</section>
+</div>
+<p class="footer">KOD3Y Sentinel — public standalone competition edition. All detections are rule-based; NVIDIA Nemotron response is separately identified only after a real successful Nebius API call. No response actions are automated.</p>
+</main><script>
+const $=s=>document.querySelector(s);
+const E=(minute,action,result,user='demo')=>({timestamp:'2026-10-28T09:'+String(minute).padStart(2,'0')+':00Z',action,result,user});
+const scenarios={
+burst:[E(0,'login','failure'),E(2,'login','failure'),E(4,'login','failure'),E(5,'login','success'),E(6,'mfa_disabled','success')],
+drift:[E(0,'login','success'),E(1,'audit_logging_disabled','success'),E(3,'mfa_disabled','success')],
+clean:[E(0,'login','success'),E(5,'file_read','success'),E(9,'logout','success')]
+};
+function load(name){$('#events').value=JSON.stringify(scenarios[name],null,2);$('#feedback').textContent='Synthetic scenario loaded. Run the analysis.'}
+$('#scenario-burst').onclick=()=>load('burst');$('#scenario-drift').onclick=()=>load('drift');$('#scenario-clean').onclick=()=>load('clean');load('burst');
+function node(tag,text,css){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(css)el.className=css;return el}
+function show(report){
+$('#eventsNum').textContent=report.event_count;$('#findingsNum').textContent=report.finding_count;$('#highNum').textContent=report.severity_counts.high;
+const list=$('#findings');list.replaceChildren();
+if(!report.findings.length){list.append(node('p','No rule matches in this synthetic scenario. This does not prove an environment is secure.'));return}
+for(const f of report.findings){
+const card=node('article',undefined,'finding');
+card.append(node('div',f.severity+' · '+f.confidence,'severity'),node('h3',f.title),node('p','Account: '+f.user));
+card.append(node('p','Evidence: '+f.evidence.join(', ')));
+const ul=node('ul');for(const step of f.next_steps)ul.append(node('li',step));card.append(ul);list.append(card)
+}}
+$('#run').onclick=async()=>{
+$('#feedback').textContent='Analyzing synthetic evidence…';$('#run').disabled=true;
+try{
+const events=JSON.parse($('#events').value);const use_ai=$('#ai').checked;
+const headers={'Content-Type':'application/json'};
+if(use_ai&&$('#token').value)headers['X-Demo-Token']=$('#token').value;
+const response=await fetch('/api/analyze',{method:'POST',headers,body:JSON.stringify({events,use_ai})});
+const payload=await response.json();
+if(!response.ok)throw Error(payload.error||'Analysis failed');
+show(payload.report);
+const ai=payload.ai||{status:'not_requested'};
+$('#modelText').textContent=ai.status==='live'?'Verified live call to '+ai.model+'\n\n'+ai.text:(ai.message||'Status: '+ai.status+'. No live AI result.');
+$('#feedback').textContent='Analysis complete. Findings are not proof of compromise.';
+}catch(err){$('#feedback').textContent='Error: '+err.message}finally{$('#run').disabled=false}
+};
+</script></body></html>
