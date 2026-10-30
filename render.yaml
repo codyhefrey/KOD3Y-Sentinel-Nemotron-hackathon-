@@ -1,0 +1,17 @@
+# Render Blueprint — deploy the standalone public demo only.
+# Default: synthetic offline analysis. Live Nebius AI is disabled by design.
+services:
+  - type: web
+    name: kod3y-sentinel-nemotron-demo
+    runtime: python
+    plan: free
+    buildCommand: python -m compileall -q .
+    startCommand: python app.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: NEBIUS_AI_ENABLED
+        value: "0"
