@@ -58,7 +58,7 @@ Use OBS Studio or Windows Snipping Tool screen recording, record your own narrat
 ## Final submission checklist
 
 - [ ] Live NVIDIA model invocation via Nebius actually tested
-- [ ] Verified public demo (judges can use through the judging period)
+- [x] Public offline demonstration deployed and reachable (live Nebius AI unavailable until access is configured)
 - [ ] Source and open-source license visible in GitHub
 - [ ] YouTube link public, less than 3 minutes
 - [ ] Best Apps and Agents track selected
@@ -67,3 +67,11 @@ Use OBS Studio or Windows Snipping Tool screen recording, record your own narrat
 - [ ] Submission accepted by Devpost **before 1:00 PM EDT Oct 30**
 
 **IP warning:** This public Apache-2.0 edition is open source. Do not push proprietary private code or any secrets into it. Read the event rules and grants before submitting.
+
+### Hosting evidence
+
+Public website: https://kod3y-sentinel-nemotron-demo.onrender.com
+
+Render service: https://dashboard.render.com/web/srv-dbhud7on74is73cpcklg
+
+The hosted synthetic investigation demo is live. Real Nebius/NVIDIA inference is still not verified and is necessary for a qualifying contest entry.
