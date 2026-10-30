@@ -5,7 +5,7 @@
 **Suggested track:** Best Apps and Agents  
 **Project:** KOD3Y Sentinel — Nemotron Security Copilot  
 **GitHub:** https://github.com/codyhefrey/KOD3Y-Sentinel-Nemotron-hackathon-  
-**Working public demo URL:** NOT YET AVAILABLE — must be filled after actual deployment  
+**Public demo URL:** https://kod3y-sentinel-nemotron-demo.onrender.com — hosted offline demonstration; live Nebius model inference remains unverified  
 **Public YouTube demo URL:** NOT YET AVAILABLE — must be recorded and uploaded
 
 > **Submission gate**: Do not claim the required Nebius+NVIDIA model call until an authenticated live request actually succeeds. Offline rule alerts alone do not qualify. The following text is a draft that must match the final tested version.
