@@ -1,5 +1,9 @@
 # KOD3Y Sentinel — Nemotron Security Copilot
 
+**Public demonstration:** https://kod3y-sentinel-nemotron-demo.onrender.com
+
+The hosted synthetic-event investigation engine is live on Render. **NVIDIA Nemotron model inference through Nebius is not yet verified and remains disabled** in the public service. The public service's rule-based demonstration is not a substitute for the contest's required live model use.
+
 **Evidence-first security investigation** for the 2026 Nebius x NVIDIA Global AI Hackathon. This is a **public, standalone, synthetic-only competition edition** under KOD3Y T3CH. The private flagship Sentinel repository is **not** included.
 
 ## What runs today
@@ -9,7 +13,7 @@
 - Findings traceable to immutable demo event IDs, severity and human-review playbooks
 - Server-side optional NVIDIA Nemotron explanation via Nebius Token Factory's OpenAI-compatible endpoint
 - Live AI is **disabled by default**, requires an issued key, NVIDIA Nemotron model, feature flag and separate demo authorization token
-- Automated GitHub Actions tests; no dependencies beyond Python 3.10+
+- Automated GitHub Actions unit and local HTTP smoke tests; no dependencies beyond Python 3.10+
 
 **Live Nebius inference has NOT been verified with an authorized account or credits.** Without a successful real Token Factory call, this repository does **not** meet the hackathon's qualifying model/runtime requirement.
 
@@ -44,7 +48,7 @@ For public hosting, enable only the offline path by default; to provide judges a
 
 ## Deployment preparation
 
-A `render.yaml` free-tier blueprint is included. The service reads its port from `PORT`, uses `HOST=0.0.0.0` for hosting, and responds at `/api/health`. Creating or deploying a service requires selecting the proper Render workspace and confirming the service; it has **not** been deployed by this repository change. A public URL alone is not proof of required Nebius integration.
+A `render.yaml` free-tier blueprint is included. The service reads its port from `PORT`, uses `HOST=0.0.0.0` for hosting, and responds at `/api/health`. The service has been deployed at https://kod3y-sentinel-nemotron-demo.onrender.com on Render's free plan. The live host returns its UI, but **no Nebius model inference has been verified**. Public hosting alone does not meet the hackathon's qualifying runtime requirement.
 
 ## Safety
 
