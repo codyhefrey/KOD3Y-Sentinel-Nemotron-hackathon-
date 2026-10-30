@@ -1,63 +1,68 @@
 # KOD3Y Sentinel — Nemotron Security Copilot
 
-A **public, standalone hackathon edition** of a defensive cybersecurity investigation concept. This repository contains independent synthetic-data demo code; it does not publish the original private KOD3Y Sentinel AI project.
+**Evidence-first security investigation** for the 2026 Nebius x NVIDIA Global AI Hackathon. This is a **public, standalone, synthetic-only competition edition** under KOD3Y T3CH. The private flagship Sentinel repository is **not** included.
 
-## What works
+## What runs today
 
-- Browser interface for synthetic JSON event input
-- Python standard-library HTTP backend and transparent detection rules
-- Repeated login failure detection (3+ attempts within 15 minutes)
-- Sensitive security-change flags and event ID references
-- Optional **real** Nebius Token Factory chat-completions API adapter
-- Honest offline state when no model credentials are configured
-- Four unit tests
+- Browser investigation studio with three preloaded synthetic scenarios
+- Deterministic analyst rules: login failure bursts, successful login after failures, MFA and audit-logging changes
+- Findings traceable to immutable demo event IDs, severity and human-review playbooks
+- Server-side optional NVIDIA Nemotron explanation via Nebius Token Factory's OpenAI-compatible endpoint
+- Live AI is **disabled by default**, requires an issued key, NVIDIA Nemotron model, feature flag and separate demo authorization token
+- Automated GitHub Actions tests; no dependencies beyond Python 3.10+
 
-**Important:** The Nebius integration is implemented but has **not been verified against a live NVIDIA model**. Do not describe the project as fully compliant with hackathon model requirements until a real successful API call is recorded.
+**Live Nebius inference has NOT been verified with an authorized account or credits.** Without a successful real Token Factory call, this repository does **not** meet the hackathon's qualifying model/runtime requirement.
 
-## Run locally
-
-Python 3.10+; no packages required.
-
-```bash
-python app.py
-```
-
-Open http://127.0.0.1:8766 and click **Analyze events**.
-
-Run tests:
-
-```bash
-python -m unittest -v test_app.py
-```
-
-## Optional Nebius integration
-
-Get access through the official Nebius platform. Check the model catalog for the **exact available NVIDIA Nemotron model ID**. Do not commit credentials.
-
-PowerShell:
+## Run locally on Windows PowerShell
 
 ```powershell
-$env:NEBIUS_API_KEY = "YOUR_KEY_HERE"
-$env:NEBIUS_MODEL = "YOUR_AVAILABLE_NVIDIA_MODEL_ID"
-python app.py
+git clone https://github.com/codyhefrey/KOD3Y-Sentinel-Nemotron-hackathon-.git
+cd KOD3Y-Sentinel-Nemotron-hackathon-
+py -m unittest discover -v
+py app.py
 ```
 
-The backend defaults to `https://api.tokenfactory.nebius.com/v1/chat/completions`; override `NEBIUS_BASE_URL` if your Nebius account documents a different endpoint. Select the **Request real Nebius explanation** checkbox to opt in. This may use paid credits. Errors are shown rather than faking a successful AI response.
+Open <http://127.0.0.1:8766>. Choose a scenario, then click **Analyze incident**. The synthetic rule engine runs **without payment or an API key**.
 
-## Safety and limitations
+## Configure optional live Nebius/NVIDIA Nemotron
 
-Only synthetic logs are appropriate for this prototype. There is no authentication, persistence, rate limiting, production hardening or automatic response action. Run on localhost only. Evidence is limited to the synthetic input; AI text is advisory and requires independent verification. Do not deploy this server publicly as-is.
+The official Nebius Token Factory API is OpenAI-compatible at `https://api.tokenfactory.nebius.com/v1/chat/completions`. The verified model ID must come from the model catalog available to **your account**. An example documented by Nebius is `nvidia/Nemotron-3_5-Lightning`.
 
-## Hackathon completion checklist
+First obtain the issued credentials and explicitly authorize any billing required in your own Nebius account. **Do not bypass billing requirements, enable charges unintentionally, or share access keys.**
 
-- [x] Independent public repository with Apache-2.0 license
-- [x] Python backend, browser UI and offline tests
-- [ ] Confirm NVIDIA Nemotron model ID and **successful real Nebius runtime call**
-- [ ] Verify actual API responses and security safeguards
-- [ ] Host a safe working demo with suitable authentication and controls
-- [ ] Record a public YouTube demo under 3 minutes
-- [ ] Complete Devpost story, track, feedback and submission before deadline
+```powershell
+$env:NEBIUS_API_KEY = Read-Host "Paste the issued Nebius API key"
+$env:NEBIUS_MODEL = "nvidia/Nemotron-3_5-Lightning"
+$env:NEBIUS_AI_ENABLED = "1"
+$env:DEMO_ACCESS_TOKEN = Read-Host "Create a separate, random demo access token"
+py app.py
+```
 
-## Intellectual property
+Only after choosing the **Request live NVIDIA Nemotron explanation** checkbox and supplying the separate demo access token will the server try a live request. The browser must **never** receive the Nebius API key. The access token protects the billable route; **do not post it publicly**. A passing offline test is not a verified live AI demonstration.
 
-The competition edition is released under the repository's Apache-2.0 license. The separate private flagship repository is not included here.
+For public hosting, enable only the offline path by default; to provide judges an authenticated live AI demonstration, review provider allowances, grant restricted judge access and assess credit/cost exposure. Public unauthenticated requests will not trigger paid inference.
+
+## Deployment preparation
+
+A `render.yaml` free-tier blueprint is included. The service reads its port from `PORT`, uses `HOST=0.0.0.0` for hosting, and responds at `/api/health`. Creating or deploying a service requires selecting the proper Render workspace and confirming the service; it has **not** been deployed by this repository change. A public URL alone is not proof of required Nebius integration.
+
+## Safety
+
+This is not a production SOC tool. Use **fictional/synthetic events only**. No log ingestion, persistence, identity verification, case management, rate limiting, production-grade authentication, enforcement, or automated remediation. Human verification is required for any finding or AI suggestion. Do not expose an unrestricted billable AI endpoint to the internet.
+
+## Submission checklist
+
+- [x] Public Apache-2.0 repository separate from the private flagship
+- [x] Rules, source-linked evidence and synthetic scenario UI
+- [x] CI test workflow
+- [x] Render configuration ready (not deployed)
+- [ ] **Actual successful NVIDIA Nemotron runtime request on Nebius**
+- [ ] Hosted working demo and verified judge access
+- [ ] Public YouTube demo under 3 minutes showing the required Nebius/NVIDIA inference
+- [ ] Devpost fields, feedback and submission completed by **Oct 30, 2026, 1:00 PM EDT**
+
+See [SUBMISSION.md](SUBMISSION.md) for the Devpost draft and video plan.
+
+## Licensing
+
+Apache License 2.0 applies only to files in **this** public repository. No private flagship source, credentials or trade secrets are included. Rights to external models, APIs and service output remain governed by their own terms.
