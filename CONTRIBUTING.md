@@ -11,7 +11,10 @@ Thank you for helping improve this public project.
 6. Wait for maintainer review. Contributions are not automatically accepted or merged.
 
 ## Quality and safety
-- Include tests for functional changes; run the repository's documented checks where available.
+- Include tests for functional changes; run the repository's documented checks before opening a pull request:
+  ```bash
+  python -m unittest discover -s . -p 'test_*.py' -v
+  ```
 - Do not commit credentials, API keys, tokens, personal data, confidential documents, or proprietary enterprise code.
 - Use synthetic data and safe defensive examples only. Do not include live malware, exploit payloads, or unauthorized access techniques.
 - Report security vulnerabilities privately to maintainers rather than opening public exploit reports.
