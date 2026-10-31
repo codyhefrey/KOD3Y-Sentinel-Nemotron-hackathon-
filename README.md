@@ -17,16 +17,57 @@ The hosted synthetic-event investigation engine is live on Render. **NVIDIA Nemo
 
 **Live Nebius inference has NOT been verified with an authorized account or credits.** Without a successful real Token Factory call, this repository does **not** meet the hackathon's qualifying model/runtime requirement.
 
-## Run locally on Windows PowerShell
+## Prerequisites
 
+- **Python 3.10+**: Uses standard library modules only (`http.server`, `urllib`, `json`, `datetime`, `unittest`). No external packages or `pip install` required.
+- **Web Browser**: Any modern browser (Chrome, Edge, Firefox, Safari) to interact with the local investigation studio UI.
+- **Git**: For version control and cloning the repository.
+- *(Optional)* **Node.js 18+ / 22+**: Only needed if verifying the inline JavaScript syntax check locally prior to CI (`node --check`).
+
+## Run locally
+
+Clone the repository and start the server:
+
+**Windows (PowerShell):**
 ```powershell
 git clone https://github.com/codyhefrey/KOD3Y-Sentinel-Nemotron-hackathon-.git
 cd KOD3Y-Sentinel-Nemotron-hackathon-
-py -m unittest discover -v
 py app.py
 ```
 
-Open <http://127.0.0.1:8766>. Choose a scenario, then click **Analyze incident**. The synthetic rule engine runs **without payment or an API key**.
+**macOS / Linux:**
+```bash
+git clone https://github.com/codyhefrey/KOD3Y-Sentinel-Nemotron-hackathon-.git
+cd KOD3Y-Sentinel-Nemotron-hackathon-
+python3 app.py
+```
+
+Open <http://127.0.0.1:8766> in your browser. Choose a scenario, then click **Analyze incident**. The synthetic rule engine runs entirely offline **without payment or an API key**. Press `Ctrl+C` in your terminal to stop the local server.
+
+> **Tip:** You can customize the server host or port with environment variables, e.g. `$env:PORT="9000"` (Windows PowerShell) or `PORT=9000 python3 app.py` (macOS/Linux).
+
+## Running tests
+
+Run the reproducible test suite locally matching the GitHub Actions CI workflow:
+
+**Windows (PowerShell):**
+```powershell
+py -m unittest discover -s . -p 'test_*.py' -v
+```
+
+**macOS / Linux:**
+```bash
+python3 -m unittest discover -s . -p 'test_*.py' -v
+```
+
+To quickly verify Python syntax across all modules:
+```bash
+python -m compileall -q .
+```
+
+The automated test suite runs completely offline with no network or API key required:
+- `test_app.py`: 12 detector unit tests verifying deterministic rules (bursts, account takeover, MFA/audit log changes) and offline safety guards.
+- `test_http.py`: 5 local loopback HTTP smoke tests verifying `/`, `/api/health`, `/api/analyze`, and error handling.
 
 ## Configure optional live Nebius/NVIDIA Nemotron
 
@@ -59,7 +100,7 @@ This is not a production SOC tool. Use **fictional/synthetic events only**. No l
 - [x] Public Apache-2.0 repository separate from the private flagship
 - [x] Rules, source-linked evidence and synthetic scenario UI
 - [x] CI test workflow
-- [x] Render configuration ready (not deployed)
+- [x] Render configuration ready and deployed (offline demo)
 - [ ] **Actual successful NVIDIA Nemotron runtime request on Nebius**
 - [ ] Hosted working demo and verified judge access
 - [ ] Public YouTube demo under 3 minutes showing the required Nebius/NVIDIA inference
