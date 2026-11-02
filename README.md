@@ -54,16 +54,18 @@ A `render.yaml` free-tier blueprint is included. The service reads its port from
 
 This is not a production SOC tool. Use **fictional/synthetic events only**. No log ingestion, persistence, identity verification, case management, rate limiting, production-grade authentication, enforcement, or automated remediation. Human verification is required for any finding or AI suggestion. Do not expose an unrestricted billable AI endpoint to the internet.
 
-## Submission checklist
+## Submission checklist (historical; deadline has passed)
+
+**Current review date: November 2, 2026.** This section records unverified submission tasks, not remaining time before the competition deadline. Preserve accurate historical status.
 
 - [x] Public Apache-2.0 repository separate from the private flagship
 - [x] Rules, source-linked evidence and synthetic scenario UI
 - [x] CI test workflow
-- [x] Render configuration ready (not deployed)
+- [x] Render deployment configured and hosted synthetic demonstration reported; independent live-host check still required
 - [ ] **Actual successful NVIDIA Nemotron runtime request on Nebius**
-- [ ] Hosted working demo and verified judge access
+- [ ] Independently reverify hosted demo accessibility and judge access
 - [ ] Public YouTube demo under 3 minutes showing the required Nebius/NVIDIA inference
-- [ ] Devpost fields, feedback and submission completed by **Oct 30, 2026, 1:00 PM EDT**
+- [ ] Verify whether Devpost was actually submitted by **Oct 30, 2026, 1:00 PM EDT**; this deadline has passed. No submission is verified by the repository.
 
 See [SUBMISSION.md](SUBMISSION.md) for the Devpost draft and video plan.
 
